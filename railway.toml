@@ -3,7 +3,7 @@ builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "/app/start.sh"
+startCommand = "bash -c 'D=/data/.hermes/sonic-hermes-kb; [ -d \"$D/.git\" ] || git clone https://x-access-token:$KB_TOKEN@github.com/lebtiga/sonic-hermes-kb.git \"$D\"; bash \"$D/deploy/sync-kb.sh\" || true; (while true; do sleep 600; bash \"$D/deploy/sync-kb.sh\" >/dev/null 2>&1; done &); exec /app/start.sh'"
 healthcheckPath = "/health"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"
